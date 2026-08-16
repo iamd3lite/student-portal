@@ -10,7 +10,7 @@
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="styles.css">
 </head>
-<body class="auth-page">
+<body class="auth-page" data-page="login">
   <main class="auth-shell">
     <!-- Brand / welcome hero -->
     <aside class="auth-hero">
@@ -46,7 +46,7 @@
           <a class="auth-tab" href="register.html">Register</a>
         </nav>
 
-        <form action="dashboard.html" method="get" novalidate>
+        <form action="dashboard.html" method="get" novalidate data-login-form>
           <div class="form-field">
             <label class="field-label" for="matric">Matric number</label>
             <div class="input-wrap">
@@ -100,17 +100,6 @@
     </section>
   </main>
 
-  <script>
-    document.querySelectorAll('.reveal-toggle').forEach(function (btn) {
-      btn.addEventListener('click', function () {
-        var input = document.getElementById(btn.dataset.reveal);
-        if (!input) return;
-        var show = input.type === 'password';
-        input.type = show ? 'text' : 'password';
-        btn.classList.toggle('is-on', show);
-        btn.setAttribute('aria-label', show ? 'Hide password' : 'Show password');
-      });
-    });
-  </script>
+  <script src="app.js"></script>
 </body>
 </html>
