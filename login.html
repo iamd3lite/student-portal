@@ -1,0 +1,66 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Federal University course registration portal sign in">
+  <title>Sign In | FU ePortal</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body class="login-page">
+  <main class="login-wrap">
+    <header class="login-brand">
+      <img class="brand-logo" src="school-logo.png" width="350" height="368" alt="Federal University crest">
+      <h1>Course Registration ePortal</h1>
+      <p>Federal University &middot; 2025/2026 Session</p>
+    </header>
+
+    <section class="login-card" aria-label="Portal access">
+      <nav class="auth-tabs" aria-label="Account access">
+        <a class="auth-tab active" href="login.html" aria-current="page">Sign In</a>
+        <a class="auth-tab" href="login.html">Register</a>
+      </nav>
+      <form action="dashboard.html" method="get">
+        <div class="form-field">
+          <label class="field-label" for="matric">Matric number</label>
+          <input class="field-input" id="matric" name="matric" type="text" placeholder="e.g. CSC/2022/0147" autocomplete="username" required>
+        </div>
+        <div class="form-field">
+          <label class="field-label" for="password">Password</label>
+          <div class="password-wrap">
+            <input class="field-input" id="password" name="password" type="password" placeholder="Enter your password" autocomplete="current-password" required>
+            <span class="field-icon" aria-hidden="true">
+              <svg class="icon" viewBox="0 0 24 24"><path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7S2 12 2 12Z"/><circle cx="12" cy="12" r="3"/></svg>
+            </span>
+          </div>
+        </div>
+        <div class="login-options">
+          <label class="remember">
+            <input type="checkbox" name="remember" value="yes">
+            <span>Keep me signed in</span>
+          </label>
+          <a class="forgot-link" href="mailto:helpdesk@fu.edu.ng?subject=Password%20reset">Forgot password?</a>
+        </div>
+        <button class="button login-submit" type="submit">Sign in to ePortal</button>
+      </form>
+      <div class="register-notice" role="note">
+        <span class="register-notice-icon" aria-hidden="true">
+          <svg class="icon" viewBox="0 0 24 24"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M19 8v6M22 11h-6"/></svg>
+        </span>
+        <div class="register-notice-text">
+          <strong>New to the portal?</strong>
+          <span>Fresh students &amp; first-time users must create an account to begin course registration.</span>
+        </div>
+        <a class="button button-outline button-sm register-notice-cta" href="login.html">Register now</a>
+      </div>
+      <footer class="login-links">
+        Having trouble? <a href="mailto:helpdesk@fu.edu.ng">Contact the ICT help desk</a><br>
+        University staff? <a href="#">Access the staff portal</a>
+      </footer>
+    </section>
+  </main>
+</body>
+</html>

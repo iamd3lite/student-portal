@@ -1,0 +1,51 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Dashboard | FU ePortal</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet"><link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<div class="portal-shell">
+  <input class="menu-toggle" id="mobile-menu" type="checkbox" aria-label="Toggle navigation menu">
+  <header class="mobile-header"><a class="mobile-brand" href="dashboard.html"><span class="brand-mark">FU</span><span>ePortal</span></a><label class="menu-button" for="mobile-menu" aria-label="Open navigation"><span></span><span></span><span></span></label></header>
+  <aside class="sidebar">
+    <label class="menu-close" for="mobile-menu" aria-label="Close navigation"><svg class="icon" viewBox="0 0 24 24"><path d="m6 6 12 12M18 6 6 18"/></svg></label>
+    <a class="brand" href="dashboard.html"><span class="brand-mark">FU</span><span><span class="brand-name">ePortal</span><span class="brand-subtitle">Federal University</span></span></a>
+    <p class="nav-label">Student menu</p>
+    <nav class="side-nav" aria-label="Student navigation">
+      <a class="nav-link active" href="dashboard.html" aria-current="page"><svg class="icon" viewBox="0 0 24 24"><rect width="7" height="9" x="3" y="3" rx="1"/><rect width="7" height="5" x="14" y="3" rx="1"/><rect width="7" height="9" x="14" y="12" rx="1"/><rect width="7" height="5" x="3" y="16" rx="1"/></svg><span>Dashboard</span></a>
+      <a class="nav-link" href="available-courses.html"><svg class="icon" viewBox="0 0 24 24"><path d="M2 6h4M2 10h4M2 14h4M2 18h4"/><rect width="16" height="20" x="6" y="2" rx="2"/><path d="M10 8h8M10 12h6"/></svg><span>Available Courses</span></a>
+      <a class="nav-link" href="my-courses.html"><svg class="icon" viewBox="0 0 24 24"><path d="m22 10-10-5L2 10l10 5 10-5Z"/><path d="M6 12v5c3 2.5 9 2.5 12 0v-5"/></svg><span>My Courses</span></a>
+      <a class="nav-link" href="profile.html"><svg class="icon" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="9" r="3"/><path d="M6.5 19a6 6 0 0 1 11 0"/></svg><span>Profile</span></a>
+    </nav>
+    <div class="sidebar-account"><p class="account-name">Adaeze Okafor</p><p class="account-number">CSC/2022/0147</p><a class="signout" href="login.html">Sign out</a></div>
+  </aside>
+  <label class="menu-backdrop" for="mobile-menu" aria-label="Close navigation"></label>
+
+  <main class="main">
+    <header class="page-head"><div><p class="eyebrow">Student dashboard</p><h1>Welcome back, Adaeze</h1><p>300 Level &middot; B.Sc. Computer Science</p></div><span class="session-badge">2025/2026 Session</span></header>
+    <section class="overview-card" aria-label="Student and academic summary">
+      <div class="overview-profile"><div class="overview-avatar" aria-hidden="true">AO</div><div><p class="overview-kicker">Student profile</p><h2>Adaeze Okafor</h2><p>CSC/2022/0147</p><div class="overview-details"><span>300 Level</span><span>B.Sc. Computer Science</span><span>First Semester</span></div></div><a class="profile-link" href="profile.html">View profile<svg class="icon" viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a></div>
+      <div class="stat-grid">
+        <article class="stat-card"><span class="stat-icon"><svg class="icon" viewBox="0 0 24 24"><path d="m12 2 9 5-9 5-9-5 9-5Z"/><path d="m3 12 9 5 9-5M3 17l9 5 9-5"/></svg></span><div><strong class="stat-number">18</strong><p class="stat-label">Units Registered</p></div></article>
+        <article class="stat-card"><span class="stat-icon"><svg class="icon" viewBox="0 0 24 24"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2Z"/></svg></span><div><strong class="stat-number">6</strong><p class="stat-label">Courses Enrolled</p></div></article>
+        <article class="stat-card"><span class="stat-icon"><svg class="icon" viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M16 3v4M8 3v4M3 11h18"/></svg></span><div><strong class="stat-number">1st</strong><p class="stat-label">Semester</p></div></article>
+        <article class="stat-card"><span class="stat-icon"><svg class="icon" viewBox="0 0 24 24"><path d="M3 20h18M5 17l4-5 4 3 6-8"/><path d="M15 7h4v4"/></svg></span><div><strong class="stat-number">4.32</strong><p class="stat-label">CGPA</p></div></article>
+      </div>
+    </section>
+    <section class="card registration-card"><div><h2>Course registration</h2><p>You have registered 18 of the maximum 24 credit units for this semester.</p><div class="progress"><span style="width:75%"></span></div><div class="progress-meta"><span>18 units selected</span><span>75% complete</span></div></div><a class="button" href="available-courses.html">Register courses<svg class="icon" viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a></section>
+    <section><div class="section-head"><h2 class="section-title">Currently registered</h2><a class="muted" href="my-courses.html" style="font-size:12px;font-weight:700;text-decoration:none">View all courses</a></div>
+      <div class="table-card"><div class="table-scroll"><table><thead><tr><th>SN</th><th>Code</th><th>Title</th><th>Unit</th><th>Lecturer</th><th>Status</th></tr></thead><tbody>
+        <tr><td>01</td><td class="course-code">CSC 301</td><td class="course-title">Data Structures and Algorithms</td><td>3</td><td>Dr. I. Adebayo</td><td><span class="status">Registered</span></td></tr>
+        <tr><td>02</td><td class="course-code">CSC 303</td><td class="course-title">Operating Systems I</td><td>3</td><td>Prof. N. Eze</td><td><span class="status">Registered</span></td></tr>
+        <tr><td>03</td><td class="course-code">CSC 305</td><td class="course-title">Database Systems</td><td>3</td><td>Dr. T. Balogun</td><td><span class="status">Registered</span></td></tr>
+        <tr><td>04</td><td class="course-code">CSC 307</td><td class="course-title">Computer Architecture</td><td>3</td><td>Engr. M. Ibrahim</td><td><span class="status">Registered</span></td></tr>
+      </tbody></table></div></div>
+    </section>
+  </main>
+</div>
+</body>
+</html>

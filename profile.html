@@ -1,0 +1,31 @@
+<!doctype html>
+<html lang="en">
+<head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Profile | FU ePortal</title><link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet"><link rel="stylesheet" href="styles.css"></head>
+<body><div class="portal-shell">
+  <input class="menu-toggle" id="mobile-menu" type="checkbox" aria-label="Toggle navigation menu">
+  <header class="mobile-header"><a class="mobile-brand" href="dashboard.html"><span class="brand-mark">FU</span><span>ePortal</span></a><label class="menu-button" for="mobile-menu" aria-label="Open navigation"><span></span><span></span><span></span></label></header>
+  <aside class="sidebar">
+    <label class="menu-close" for="mobile-menu" aria-label="Close navigation"><svg class="icon" viewBox="0 0 24 24"><path d="m6 6 12 12M18 6 6 18"/></svg></label>
+    <a class="brand" href="dashboard.html"><span class="brand-mark">FU</span><span><span class="brand-name">ePortal</span><span class="brand-subtitle">Federal University</span></span></a><p class="nav-label">Student menu</p>
+    <nav class="side-nav" aria-label="Student navigation">
+      <a class="nav-link" href="dashboard.html"><svg class="icon" viewBox="0 0 24 24"><rect width="7" height="9" x="3" y="3" rx="1"/><rect width="7" height="5" x="14" y="3" rx="1"/><rect width="7" height="9" x="14" y="12" rx="1"/><rect width="7" height="5" x="3" y="16" rx="1"/></svg><span>Dashboard</span></a>
+      <a class="nav-link" href="available-courses.html"><svg class="icon" viewBox="0 0 24 24"><path d="M2 6h4M2 10h4M2 14h4M2 18h4"/><rect width="16" height="20" x="6" y="2" rx="2"/><path d="M10 8h8M10 12h6"/></svg><span>Available Courses</span></a>
+      <a class="nav-link" href="my-courses.html"><svg class="icon" viewBox="0 0 24 24"><path d="m22 10-10-5L2 10l10 5 10-5Z"/><path d="M6 12v5c3 2.5 9 2.5 12 0v-5"/></svg><span>My Courses</span></a>
+      <a class="nav-link active" href="profile.html" aria-current="page"><svg class="icon" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="9" r="3"/><path d="M6.5 19a6 6 0 0 1 11 0"/></svg><span>Profile</span></a>
+    </nav><div class="sidebar-account"><p class="account-name">Adaeze Okafor</p><p class="account-number">CSC/2022/0147</p><a class="signout" href="login.html">Sign out</a></div>
+  </aside>
+  <label class="menu-backdrop" for="mobile-menu" aria-label="Close navigation"></label>
+  <main class="main"><header class="page-head"><div><p class="eyebrow">Student record</p><h1>Profile</h1><p>Review your academic and contact information.</p></div></header>
+    <div class="profile-layout">
+      <aside class="card profile-summary"><div class="avatar" aria-hidden="true">AO</div><h2>Adaeze Okafor</h2><p>CSC/2022/0147</p><div class="mini-stats"><div class="mini-stat"><strong>4.32</strong><span>CGPA</span></div><div class="mini-stat"><strong>300</strong><span>Level</span></div></div></aside>
+      <section class="card profile-details">
+        <div class="details-section"><h2 class="section-title">Academic Details</h2><div class="details-grid">
+          <div><span class="detail-label">Full Name</span><span class="detail-value">Adaeze Chiamaka Okafor</span></div><div><span class="detail-label">Matric No</span><span class="detail-value">CSC/2022/0147</span></div>
+          <div><span class="detail-label">Programme</span><span class="detail-value">B.Sc. Computer Science</span></div><div><span class="detail-label">Department</span><span class="detail-value">Computer Science</span></div>
+          <div><span class="detail-label">Faculty</span><span class="detail-value">Computing and Information Technology</span></div><div><span class="detail-label">Level</span><span class="detail-value">300 Level</span></div>
+        </div></div>
+        <div class="details-section"><h2 class="section-title">Contact Information</h2><form action="#" method="post"><div class="details-grid"><div><label class="field-label" for="email">Email address</label><input class="field-input" id="email" name="email" type="email" value="adaeze.okafor@students.fu.edu.ng" autocomplete="email"></div><div><label class="field-label" for="phone">Phone number</label><input class="field-input" id="phone" name="phone" type="tel" value="+234 803 547 2916" autocomplete="tel"></div></div><div class="contact-actions"><button class="button" type="submit"><svg class="icon" viewBox="0 0 24 24"><path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2Z"/><path d="M17 21v-8H7v8M7 3v5h8"/></svg>Save changes</button></div></form></div>
+      </section>
+    </div>
+  </main>
+</div></body></html>
