@@ -1,0 +1,161 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Federal University course registration portal account registration">
+  <title>Create Account | FU ePortal</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body class="auth-page">
+  <main class="auth-shell">
+    <!-- Brand / welcome hero -->
+    <aside class="auth-hero">
+      <div class="auth-hero-top">
+        <img class="auth-hero-logo" src="school-logo.png" width="350" height="368" alt="Federal University crest">
+        <div>
+          <p class="auth-hero-kicker">Federal University</p>
+          <p class="auth-hero-name">Course Registration ePortal</p>
+        </div>
+      </div>
+      <div class="auth-hero-body">
+        <h2>Join the portal.</h2>
+        <p>Create your student account in a few minutes to start registering for courses this session.</p>
+        <ul class="auth-hero-points">
+          <li><span class="auth-hero-dot" aria-hidden="true"></span> Use your official matric number to enrol</li>
+          <li><span class="auth-hero-dot" aria-hidden="true"></span> A confirmation link is sent to your student email</li>
+          <li><span class="auth-hero-dot" aria-hidden="true"></span> Set a strong password you'll remember</li>
+        </ul>
+      </div>
+      <p class="auth-hero-foot">&copy; 2025/2026 Session &middot; Office of the Registrar</p>
+    </aside>
+
+    <!-- Form panel -->
+    <section class="auth-panel" aria-label="Create account">
+      <div class="auth-panel-inner">
+        <header class="auth-head">
+          <h1>Create your account</h1>
+          <p>Fill in your details to set up portal access.</p>
+        </header>
+
+        <nav class="auth-tabs" aria-label="Account access">
+          <a class="auth-tab" href="login.html">Sign In</a>
+          <a class="auth-tab active" href="register.html" aria-current="page">Register</a>
+        </nav>
+
+        <form action="login.html" method="get" novalidate>
+          <div class="field-row">
+            <div class="form-field">
+              <label class="field-label" for="firstname">First name</label>
+              <div class="input-wrap">
+                <span class="input-icon" aria-hidden="true">
+                  <svg class="icon" viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+                </span>
+                <input class="field-input" id="firstname" name="firstname" type="text" placeholder="Ada" autocomplete="given-name" required>
+              </div>
+            </div>
+            <div class="form-field">
+              <label class="field-label" for="lastname">Last name</label>
+              <div class="input-wrap">
+                <span class="input-icon" aria-hidden="true">
+                  <svg class="icon" viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+                </span>
+                <input class="field-input" id="lastname" name="lastname" type="text" placeholder="Okafor" autocomplete="family-name" required>
+              </div>
+            </div>
+          </div>
+
+          <div class="form-field">
+            <label class="field-label" for="matric">Matric number</label>
+            <div class="input-wrap">
+              <span class="input-icon" aria-hidden="true">
+                <svg class="icon" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M3 9h18"/><circle cx="8" cy="14" r="1.6"/><path d="M13 13.5h5M13 16h4"/></svg>
+              </span>
+              <input class="field-input" id="matric" name="matric" type="text" placeholder="e.g. CSC/2022/0147" autocomplete="username" required>
+            </div>
+          </div>
+
+          <div class="form-field">
+            <label class="field-label" for="email">Student email</label>
+            <div class="input-wrap">
+              <span class="input-icon" aria-hidden="true">
+                <svg class="icon" viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 7 9 6 9-6"/></svg>
+              </span>
+              <input class="field-input" id="email" name="email" type="email" placeholder="ada.okafor@student.fu.edu.ng" autocomplete="email" required>
+            </div>
+          </div>
+
+          <div class="field-row">
+            <div class="form-field">
+              <label class="field-label" for="password">Password</label>
+              <div class="input-wrap">
+                <span class="input-icon" aria-hidden="true">
+                  <svg class="icon" viewBox="0 0 24 24"><rect x="4" y="10" width="16" height="10" rx="2"/><path d="M8 10V7a4 4 0 0 1 8 0v3"/></svg>
+                </span>
+                <input class="field-input" id="password" name="password" type="password" placeholder="Create a password" autocomplete="new-password" required>
+                <button class="reveal-toggle" type="button" data-reveal="password" aria-label="Show password">
+                  <svg class="icon" viewBox="0 0 24 24"><path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7S2 12 2 12Z"/><circle cx="12" cy="12" r="3"/></svg>
+                </button>
+              </div>
+            </div>
+            <div class="form-field">
+              <label class="field-label" for="confirm">Confirm password</label>
+              <div class="input-wrap">
+                <span class="input-icon" aria-hidden="true">
+                  <svg class="icon" viewBox="0 0 24 24"><rect x="4" y="10" width="16" height="10" rx="2"/><path d="M8 10V7a4 4 0 0 1 8 0v3"/></svg>
+                </span>
+                <input class="field-input" id="confirm" name="confirm" type="password" placeholder="Repeat password" autocomplete="new-password" required>
+                <button class="reveal-toggle" type="button" data-reveal="confirm" aria-label="Show password">
+                  <svg class="icon" viewBox="0 0 24 24"><path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7S2 12 2 12Z"/><circle cx="12" cy="12" r="3"/></svg>
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <label class="agree">
+            <input type="checkbox" name="agree" value="yes" required>
+            <span>I confirm my details are correct and agree to the <a href="#">portal usage policy</a>.</span>
+          </label>
+
+          <button class="button login-submit" type="submit">
+            Create account
+            <svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+          </button>
+        </form>
+
+        <div class="register-notice" role="note">
+          <span class="register-notice-icon" aria-hidden="true">
+            <svg class="icon" viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10Z"/><path d="m9 12 2 2 4-4"/></svg>
+          </span>
+          <div class="register-notice-text">
+            <strong>Already registered?</strong>
+            <span>If you already have portal access, simply sign in with your matric number.</span>
+          </div>
+          <a class="button button-outline button-sm register-notice-cta" href="login.html">Sign in</a>
+        </div>
+
+        <footer class="login-links">
+          Having trouble? <a href="mailto:helpdesk@fu.edu.ng">Contact the ICT help desk</a><br>
+          University staff? <a href="#">Access the staff portal</a>
+        </footer>
+      </div>
+    </section>
+  </main>
+
+  <script>
+    document.querySelectorAll('.reveal-toggle').forEach(function (btn) {
+      btn.addEventListener('click', function () {
+        var input = document.getElementById(btn.dataset.reveal);
+        if (!input) return;
+        var show = input.type === 'password';
+        input.type = show ? 'text' : 'password';
+        btn.classList.toggle('is-on', show);
+        btn.setAttribute('aria-label', show ? 'Hide password' : 'Show password');
+      });
+    });
+  </script>
+</body>
+</html>
