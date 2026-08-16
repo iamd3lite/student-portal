@@ -1,0 +1,78 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Federal University course registration portal - admin sign in">
+  <title>Admin Sign In | FU ePortal</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body class="auth-page" data-page="admin-login">
+  <main class="auth-shell">
+    <!-- Brand / welcome hero -->
+    <aside class="auth-hero">
+      <div class="auth-hero-top">
+        <img class="auth-hero-logo" src="school-logo.png" width="350" height="368" alt="Federal University crest">
+        <div>
+          <p class="auth-hero-kicker">Federal University</p>
+          <p class="auth-hero-name">Course Registration ePortal</p>
+        </div>
+      </div>
+      <div class="auth-hero-body">
+        <h2>Administrator access.</h2>
+        <p>Review and validate the course registration forms submitted by students for this session.</p>
+        <ul class="auth-hero-points">
+          <li><span class="auth-hero-dot" aria-hidden="true"></span> View submitted course-registration forms</li>
+          <li><span class="auth-hero-dot" aria-hidden="true"></span> Approve or reject each student's selection</li>
+          <li><span class="auth-hero-dot" aria-hidden="true"></span> Keep the registration records in order</li>
+        </ul>
+      </div>
+      <p class="auth-hero-foot">&copy; 2025/2026 Session &middot; Office of the Registrar</p>
+    </aside>
+
+    <!-- Form panel -->
+    <section class="auth-panel" aria-label="Admin access">
+      <div class="auth-panel-inner">
+        <header class="auth-head">
+          <h1>Administrator sign in</h1>
+          <p>Enter your name and admin ID to review submissions.</p>
+        </header>
+
+        <form action="admin.html" method="post" novalidate data-admin-login-form>
+          <div class="form-field">
+            <label class="field-label" for="admin-name">Full name</label>
+            <div class="input-wrap">
+              <span class="input-icon" aria-hidden="true">
+                <svg class="icon" viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+              </span>
+              <input class="field-input" id="admin-name" name="adminname" type="text" placeholder="e.g. Dr. Musa Bello" autocomplete="name" required>
+            </div>
+          </div>
+          <div class="form-field">
+            <label class="field-label" for="admin-id">Admin ID</label>
+            <div class="input-wrap">
+              <span class="input-icon" aria-hidden="true">
+                <svg class="icon" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M3 9h18"/><circle cx="8" cy="14" r="1.6"/><path d="M13 13.5h5M13 16h4"/></svg>
+              </span>
+              <input class="field-input" id="admin-id" name="adminid" type="text" placeholder="e.g. ADM-2025-001" autocomplete="off" required>
+            </div>
+          </div>
+          <button class="button login-submit" type="submit">
+            Sign in as admin
+            <svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+          </button>
+        </form>
+
+        <footer class="login-links">
+          Not an administrator? <a href="index.html">Back to student sign in</a>
+        </footer>
+      </div>
+    </section>
+  </main>
+
+  <script src="app.js"></script>
+</body>
+</html>

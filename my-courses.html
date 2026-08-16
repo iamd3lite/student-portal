@@ -16,10 +16,47 @@
   </aside>
   <label class="menu-backdrop" for="mobile-menu" aria-label="Close navigation"></label>
   <main class="main">
-    <header class="page-head"><div><p class="eyebrow">Academic record</p><h1>My Courses</h1><p>First Semester &middot; 2025/2026 Session</p></div></header>
-    <div class="toolbar"><div class="toolbar-actions"><button class="button button-outline" type="button" onclick="window.print()"><svg class="icon" viewBox="0 0 24 24"><path d="M6 9V2h12v7M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/><rect x="6" y="14" width="12" height="8"/></svg>Print form</button><button class="button" type="button" onclick="window.print()"><svg class="icon" viewBox="0 0 24 24"><path d="M12 3v12M7 10l5 5 5-5M5 21h14"/></svg>Download course form</button></div><div class="units-total"><strong data-total-units>0</strong><span>Total units</span></div></div>
-    <section><div class="table-card"><div class="table-scroll"><table><thead><tr><th>SN</th><th>Code</th><th>Title</th><th>Unit</th><th>CA</th><th>Exam</th><th>Grade</th></tr></thead><tbody data-mycourses>
-    </tbody></table></div><footer class="table-footer"><span>Maximum: <strong>14 courses</strong></span><span>Registered: <strong data-registered-units>0 courses</strong></span><span>Remaining: <strong data-remaining-units>14 courses</strong></span></footer></div></section>
+    <header class="page-head"><div><p class="eyebrow">Academic record</p><h1>My Courses</h1><p>Registered courses &middot; 2025/2026 Session</p></div></header>
+
+    <!-- Print-only official course form header -->
+    <div class="print-header" aria-hidden="true">
+      <div class="print-crest"><img src="school-logo.png" alt="" width="64" height="64"></div>
+      <div class="print-title">
+        <h2>Federal University</h2>
+        <p>Course Registration Form &middot; 2025/2026 Session</p>
+      </div>
+    </div>
+    <div class="print-meta" aria-hidden="true">
+      <div><span>Name</span><strong data-fu="fullName">&mdash;</strong></div>
+      <div><span>Matric No</span><strong data-fu="matric">&mdash;</strong></div>
+      <div><span>Programme</span><strong data-fu="programme">&mdash;</strong></div>
+      <div><span>Department</span><strong data-fu="department">&mdash;</strong></div>
+      <div><span>Level</span><strong data-fu="levelLabel">&mdash;</strong></div>
+      <div><span>Total Units</span><strong data-total-units>0</strong></div>
+    </div>
+
+    <div class="toolbar"><div class="toolbar-actions"><button class="button button-outline" type="button" onclick="window.print()"><svg class="icon" viewBox="0 0 24 24"><path d="M6 9V2h12v7M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/><rect x="6" y="14" width="12" height="8"/></svg>Print course form</button><button class="button" type="button" data-send-validation><svg class="icon" viewBox="0 0 24 24"><path d="m22 2-7 20-4-9-9-4Z"/><path d="M22 2 11 13"/></svg>Send for validation</button></div><div class="units-total"><strong data-total-units>0</strong><span>Total units</span></div></div>
+
+    <div class="validation-status" data-validation-status hidden></div>
+
+    <section class="course-section">
+      <div class="section-head"><div class="section-head-group"><h2 class="section-title">First Semester</h2><span class="count-badge" data-count-sem1>0 courses</span></div></div>
+      <div class="table-card"><div class="table-scroll"><table><thead><tr><th>SN</th><th>Code</th><th>Title</th><th>Unit</th><th>CA</th><th>Exam</th><th>Grade</th></tr></thead><tbody data-mycourses-sem1>
+      </tbody></table></div></div>
+    </section>
+
+    <section class="course-section">
+      <div class="section-head"><div class="section-head-group"><h2 class="section-title">Second Semester</h2><span class="count-badge" data-count-sem2>0 courses</span></div></div>
+      <div class="table-card"><div class="table-scroll"><table><thead><tr><th>SN</th><th>Code</th><th>Title</th><th>Unit</th><th>CA</th><th>Exam</th><th>Grade</th></tr></thead><tbody data-mycourses-sem2>
+      </tbody></table><footer class="table-footer"><span>Maximum: <strong>14 courses</strong></span><span>Registered: <strong data-registered-units>0 courses</strong></span><span>Remaining: <strong data-remaining-units>14 courses</strong></span></footer></div>
+    </section>
+
+    <!-- Print-only signature block -->
+    <div class="print-signatures" aria-hidden="true">
+      <div><span class="sig-line"></span><p>Student's Signature / Date</p></div>
+      <div><span class="sig-line"></span><p>Course Adviser's Signature / Date</p></div>
+      <div><span class="sig-line"></span><p>HOD's Signature / Date</p></div>
+    </div>
   </main>
 </div>
 <script src="app.js"></script>

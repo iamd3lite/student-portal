@@ -7,7 +7,8 @@
 (function () {
   "use strict";
 
-  var KEYS = { account: "fu.account", session: "fu.session", enrolled: "fu.enrolled", photo: "fu.photo" };
+  var KEYS = { account: "fu.account", session: "fu.session", enrolled: "fu.enrolled", photo: "fu.photo",
+    submissions: "fu.submissions", adminSession: "fu.adminSession" };
   var MAX_COURSES = 7;          // per semester
   var MAX_TOTAL = MAX_COURSES * 2; // across both semesters
 
@@ -66,6 +67,23 @@
   function getPhoto() { return localStorage.getItem(KEYS.photo) || ""; }
   function savePhoto(dataUrl) { localStorage.setItem(KEYS.photo, dataUrl); }
   function clearPhoto() { remove(KEYS.photo); }
+
+  /* submissions: course-reg forms sent by students for admin validation */
+  function getSubmissions() { return read(KEYS.submissions) || []; }
+  function saveSubmissions(list) { write(KEYS.submissions, list); }
+  /* find the submission belonging to a given matric number */
+  function findSubmission(matric) {
+    var list = getSubmissions();
+    for (var i = 0; i < list.length; i++) {
+      if ((list[i].matric || "").toLowerCase() === (matric || "").toLowerCase()) return list[i];
+    }
+    return null;
+  }
+  /* admin session */
+  function adminLoggedIn() { return localStorage.getItem(KEYS.adminSession) === "1"; }
+  function adminLogin(admin) { localStorage.setItem(KEYS.adminSession, "1"); write("fu.adminWho", admin); }
+  function adminLogout() { remove(KEYS.adminSession); }
+  function getAdminWho() { return read("fu.adminWho") || {}; }
 
   /* ---------------------------- helpers ---------------------------- */
   function deptMeta(name) {
@@ -295,6 +313,40 @@
     requestAnimationFrame(function () { back.classList.add("show"); confirmBtn.focus(); });
   }
 
+  /* ---------------------------- prompt modal (with a text note) ---------------------------- */
+  function promptModal(opts) {
+    var back = document.createElement("div");
+    back.className = "modal-backdrop";
+    back.innerHTML =
+      "<div class=\"modal\" role=\"dialog\" aria-modal=\"true\">" +
+        "<h2 class=\"modal-title\"></h2>" +
+        "<p class=\"modal-message\"></p>" +
+        "<textarea class=\"field-input modal-input\" rows=\"3\"></textarea>" +
+        "<div class=\"modal-actions\">" +
+          "<button class=\"button button-outline\" type=\"button\" data-cancel></button>" +
+          "<button class=\"button\" type=\"button\" data-confirm></button>" +
+        "</div>" +
+      "</div>";
+    back.querySelector(".modal-title").textContent = opts.title || "Add a note";
+    back.querySelector(".modal-message").textContent = opts.message || "";
+    var input = back.querySelector(".modal-input");
+    input.placeholder = opts.placeholder || "";
+    var confirmBtn = back.querySelector("[data-confirm]");
+    var cancelBtn = back.querySelector("[data-cancel]");
+    confirmBtn.textContent = opts.confirmText || "Confirm";
+    cancelBtn.textContent = opts.cancelText || "Cancel";
+
+    function close() { back.classList.remove("show"); document.removeEventListener("keydown", onKey); setTimeout(function () { back.remove(); }, 200); }
+    function onKey(e) { if (e.key === "Escape") close(); }
+    confirmBtn.addEventListener("click", function () { var v = input.value.trim(); close(); if (opts.onConfirm) opts.onConfirm(v); });
+    cancelBtn.addEventListener("click", close);
+    back.addEventListener("click", function (e) { if (e.target === back) close(); });
+    document.addEventListener("keydown", onKey);
+
+    document.body.appendChild(back);
+    requestAnimationFrame(function () { back.classList.add("show"); input.focus(); });
+  }
+
   /* ---------------------------- dashboard ---------------------------- */
   function initDashboard(a) {
     var body = document.querySelector("[data-registered]");
@@ -322,22 +374,86 @@
 
   /* ---------------------------- my courses ---------------------------- */
   function initMyCourses(a) {
-    var body = document.querySelector("[data-mycourses]");
-    if (!body) return;
+    var sem1Body = document.querySelector("[data-mycourses-sem1]");
+    var sem2Body = document.querySelector("[data-mycourses-sem2]");
+    if (!sem1Body && !sem2Body) return;
     var map = catalogMap(a), enrolled = getEnrolled();
-    var units = 0, rows = "";
-    enrolled.forEach(function (code, i) {
-      var c = map[code]; if (!c) return; units += c.unit;
-      rows += "<tr><td>" + String(i + 1).padStart(2, "0") + "</td><td class=\"course-code\">" + esc(c.code) +
-        "</td><td class=\"course-title\">" + esc(c.title) + "</td><td>" + c.unit +
-        "</td><td class=\"muted\">&mdash;</td><td class=\"muted\">&mdash;</td><td class=\"muted\">&mdash;</td></tr>";
+
+    function renderRows(sem) {
+      var units = 0, n = 0, rows = "";
+      enrolled.forEach(function (code) {
+        var c = map[code]; if (!c || c.sem !== sem) return;
+        n++; units += c.unit;
+        rows += "<tr><td>" + pad2(n) + "</td><td class=\"course-code\">" + esc(c.code) +
+          "</td><td class=\"course-title\">" + esc(c.title) + "</td><td>" + c.unit +
+          "</td><td class=\"muted\">&mdash;</td><td class=\"muted\">&mdash;</td><td class=\"muted\">&mdash;</td></tr>";
+      });
+      if (!rows) rows = "<tr><td colspan=\"7\" class=\"muted\" style=\"text-align:center;padding:22px\">No " +
+        (sem === 1 ? "first" : "second") + " semester courses registered. " +
+        "<a href=\"available-courses.html\" style=\"color:var(--maroon);font-weight:700\">Register now</a>.</td></tr>";
+      return { rows: rows, units: units, n: n };
+    }
+
+    var r1 = renderRows(1), r2 = renderRows(2);
+    if (sem1Body) sem1Body.innerHTML = r1.rows;
+    if (sem2Body) sem2Body.innerHTML = r2.rows;
+
+    var totalUnits = r1.units + r2.units, totalCourses = r1.n + r2.n;
+    setTextAll("[data-total-units]", totalUnits);
+    setText("[data-count-sem1]", r1.n + " course" + (r1.n === 1 ? "" : "s"));
+    setText("[data-count-sem2]", r2.n + " course" + (r2.n === 1 ? "" : "s"));
+    setText("[data-registered-units]", totalCourses + " courses");
+    setText("[data-remaining-units]", Math.max(0, MAX_TOTAL - totalCourses) + " courses");
+
+    initValidation(a, enrolled, totalCourses, totalUnits);
+  }
+
+  /* ---- student: send course-reg form for admin validation ---- */
+  function initValidation(a, enrolled, totalCourses, totalUnits) {
+    var btn = document.querySelector("[data-send-validation]");
+    var statusBox = document.querySelector("[data-validation-status]");
+    var pv = profileValues(a);
+
+    function renderStatus() {
+      if (!statusBox) return;
+      var sub = findSubmission(a.matric);
+      if (!sub) { statusBox.hidden = true; return; }
+      statusBox.hidden = false;
+      var map = { pending: "pending", approved: "approved", rejected: "rejected" };
+      var label = { pending: "Pending validation", approved: "Approved", rejected: "Rejected" }[sub.status] || "Pending";
+      var msg = {
+        pending: "Your course form was submitted on " + sub.dateText + " and is awaiting review.",
+        approved: "Your course form was approved" + (sub.reviewedBy ? " by " + esc(sub.reviewedBy) : "") + " on " + (sub.reviewedText || sub.dateText) + ".",
+        rejected: "Your course form was rejected" + (sub.reviewedBy ? " by " + esc(sub.reviewedBy) : "") + ". " + (sub.note ? "Note: " + esc(sub.note) : "Please review and resubmit.")
+      }[sub.status] || "";
+      statusBox.className = "validation-status vs-" + (map[sub.status] || "pending");
+      statusBox.innerHTML = "<span class=\"vs-badge\">" + label + "</span><p>" + msg + "</p>";
+      if (btn) btn.innerHTML = "<svg class=\"icon\" viewBox=\"0 0 24 24\"><path d=\"m22 2-7 20-4-9-9-4Z\"/><path d=\"M22 2 11 13\"/></svg>Resend for validation";
+    }
+
+    if (btn) btn.addEventListener("click", function () {
+      if (!enrolled.length) return toast("Register at least one course before sending for validation.", "error");
+      confirmModal({
+        title: "Send for validation?",
+        message: "Submit your course registration form (" + totalCourses + " courses, " + totalUnits + " units) to the course adviser for validation?",
+        confirmText: "Send now", cancelText: "Not yet",
+        onConfirm: function () {
+          var list = getSubmissions().filter(function (s) { return (s.matric || "").toLowerCase() !== (a.matric || "").toLowerCase(); });
+          var now = new Date();
+          list.push({
+            matric: a.matric, fullName: pv.fullName, department: a.department,
+            programme: pv.programme, level: pv.levelLabel, email: a.email,
+            courses: enrolled.slice(), totalCourses: totalCourses, totalUnits: totalUnits,
+            status: "pending", note: "", reviewedBy: "",
+            date: now.getTime(), dateText: now.toLocaleDateString() + " " + now.toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" })
+          });
+          saveSubmissions(list);
+          toast("Course form sent for validation.", "success");
+          renderStatus();
+        }
+      });
     });
-    if (!rows) rows = "<tr><td colspan=\"7\" class=\"muted\" style=\"text-align:center;padding:26px\">You have not registered any courses. " +
-      "<a href=\"available-courses.html\" style=\"color:var(--maroon);font-weight:700\">Go to Available Courses</a>.</td></tr>";
-    body.innerHTML = rows;
-    setText("[data-total-units]", units);
-    setText("[data-registered-units]", enrolled.length + " courses");
-    setText("[data-remaining-units]", Math.max(0, MAX_TOTAL - enrolled.length) + " courses");
+    renderStatus();
   }
 
   /* ---------------------------- available courses ---------------------------- */
@@ -522,7 +638,124 @@
     });
   }
 
+  /* ---------------------------- admin login ---------------------------- */
+  function initAdminLogin() {
+    var form = document.querySelector("[data-admin-login-form]");
+    if (!form) return;
+    form.addEventListener("submit", function (e) {
+      e.preventDefault();
+      var name = (document.getElementById("admin-name") || {}).value || "";
+      var id = (document.getElementById("admin-id") || {}).value || "";
+      name = name.trim(); id = id.trim();
+      if (!name) return toast("Please enter your name.", "error");
+      if (!id) return toast("Please enter your admin ID.", "error");
+      adminLogin({ name: name, id: id });
+      toast("Signing in as admin\u2026", "success");
+      setTimeout(function () { window.location.href = "admin.html"; }, 700);
+    });
+  }
+
+  /* ---------------------------- admin dashboard ---------------------------- */
+  function guardAdmin() {
+    if (!adminLoggedIn()) { window.location.replace("admin-login.html"); return false; }
+    return true;
+  }
+
+  function initAdmin() {
+    var host = document.querySelector("[data-admin-list]");
+    if (!host) return;
+    var who = getAdminWho();
+    setText("[data-admin-name]", who.name || "Administrator");
+    setText("[data-admin-id]", who.id || "\u2014");
+
+    document.querySelectorAll(".admin-signout").forEach(function (a) {
+      a.addEventListener("click", function (e) {
+        e.preventDefault();
+        confirmModal({
+          title: "Sign out?", message: "Sign out of the admin console?",
+          confirmText: "Sign out", cancelText: "Stay",
+          onConfirm: function () { adminLogout(); window.location.href = a.getAttribute("href") || "admin-login.html"; }
+        });
+      });
+    });
+
+    function render() {
+      var subs = getSubmissions().slice().sort(function (x, y) { return y.date - x.date; });
+      var counts = { total: subs.length, pending: 0, approved: 0, rejected: 0 };
+      subs.forEach(function (s) { counts[s.status] = (counts[s.status] || 0) + 1; });
+      setText("[data-admin-total]", counts.total);
+      setText("[data-admin-pending]", counts.pending);
+      setText("[data-admin-approved]", counts.approved);
+      setText("[data-admin-rejected]", counts.rejected);
+
+      if (!subs.length) {
+        host.innerHTML = "<div class=\"card admin-empty\"><p>No course forms have been submitted yet.</p>" +
+          "<span class=\"muted\">When students send their course registration for validation, they will appear here.</span></div>";
+        return;
+      }
+
+      host.innerHTML = subs.map(function (s) {
+        var courseRows = s.courses.map(function (code, i) {
+          return "<tr><td>" + pad2(i + 1) + "</td><td class=\"course-code\">" + esc(code) + "</td></tr>";
+        }).join("");
+        var badge = "<span class=\"status-pill sp-" + s.status + "\">" +
+          ({ pending: "Pending", approved: "Approved", rejected: "Rejected" }[s.status] || "Pending") + "</span>";
+        var actions = s.status === "pending"
+          ? "<button class=\"button button-sm\" data-approve=\"" + esc(s.matric) + "\"><svg class=\"icon\" viewBox=\"0 0 24 24\"><path d=\"M20 6 9 17l-5-5\"/></svg>Approve</button>" +
+            "<button class=\"button button-sm button-outline\" data-reject=\"" + esc(s.matric) + "\"><svg class=\"icon\" viewBox=\"0 0 24 24\"><path d=\"M18 6 6 18M6 6l12 12\"/></svg>Reject</button>"
+          : "<button class=\"button button-sm button-outline\" data-reset=\"" + esc(s.matric) + "\">Reset to pending</button>";
+        return "<article class=\"card submission\">" +
+          "<div class=\"submission-head\"><div><h2>" + esc(s.fullName) + "</h2>" +
+          "<p class=\"muted\">" + esc(s.matric) + " &middot; " + esc(s.programme) + " &middot; " + esc(s.level) + "</p></div>" + badge + "</div>" +
+          "<div class=\"submission-meta\"><span>" + s.totalCourses + " courses</span><span>" + s.totalUnits + " units</span><span>Sent " + esc(s.dateText) + "</span></div>" +
+          "<details class=\"submission-courses\"><summary>View " + s.courses.length + " courses</summary>" +
+          "<div class=\"table-scroll\"><table><thead><tr><th>SN</th><th>Course code</th></tr></thead><tbody>" + courseRows + "</tbody></table></div></details>" +
+          "<div class=\"submission-actions\">" + actions + "</div>" +
+          (s.note ? "<p class=\"submission-note\">Note: " + esc(s.note) + "</p>" : "") +
+          "</article>";
+      }).join("");
+
+      host.querySelectorAll("[data-approve]").forEach(function (b) {
+        b.addEventListener("click", function () { setStatus(b.getAttribute("data-approve"), "approved"); });
+      });
+      host.querySelectorAll("[data-reject]").forEach(function (b) {
+        b.addEventListener("click", function () {
+          var matric = b.getAttribute("data-reject");
+          promptModal({
+            title: "Reject form?", message: "Optionally add a note for the student:",
+            placeholder: "e.g. Remove CSC 313, add the required elective.",
+            confirmText: "Reject", cancelText: "Cancel",
+            onConfirm: function (note) { setStatus(matric, "rejected", note); }
+          });
+        });
+      });
+      host.querySelectorAll("[data-reset]").forEach(function (b) {
+        b.addEventListener("click", function () { setStatus(b.getAttribute("data-reset"), "pending"); });
+      });
+    }
+
+    function setStatus(matric, status, note) {
+      var list = getSubmissions();
+      var now = new Date();
+      list.forEach(function (s) {
+        if ((s.matric || "").toLowerCase() === (matric || "").toLowerCase()) {
+          s.status = status;
+          s.note = note || "";
+          s.reviewedBy = status === "pending" ? "" : (who.name || "Administrator");
+          s.reviewedText = status === "pending" ? "" : (now.toLocaleDateString() + " " + now.toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" }));
+        }
+      });
+      saveSubmissions(list);
+      toast(status === "approved" ? "Form approved." : status === "rejected" ? "Form rejected." : "Form reset to pending.",
+        status === "rejected" ? "error" : status === "approved" ? "success" : "info");
+      render();
+    }
+
+    render();
+  }
+
   function setText(sel, val) { var el = document.querySelector(sel); if (el) el.textContent = val; }
+  function setTextAll(sel, val) { document.querySelectorAll(sel).forEach(function (el) { el.textContent = val; }); }
 
   /* ---------------------------- boot ---------------------------- */
   document.addEventListener("DOMContentLoaded", function () {
@@ -531,6 +764,8 @@
 
     if (page === "register") { initRegister(); return; }
     if (page === "login") { initLogin(); return; }
+    if (page === "admin-login") { initAdminLogin(); return; }
+    if (page === "admin") { if (!guardAdmin()) return; initAdmin(); return; }
 
     // portal pages require a session
     if (!guardPortal()) return;

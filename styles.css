@@ -641,8 +641,104 @@ tbody tr:last-child td { border-bottom: 0; }
   .modal-actions { flex-direction: column-reverse; }
 }
 
+/* ===== Admin console ===== */
+.admin-topbar {
+  position: sticky;
+  top: 0;
+  z-index: 15;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 14px 30px;
+  border-bottom: 1px solid var(--line);
+  background: var(--maroon);
+  color: #fff;
+}
+.admin-brand { display: flex; align-items: center; gap: 12px; text-decoration: none; color: #fff; }
+.admin-brand img { border-radius: 9px; background: #fff; padding: 4px; }
+.admin-brand-name { display: block; font-size: 15px; font-weight: 750; }
+.admin-brand-sub { display: block; font-size: 11px; color: rgba(255,255,255,.62); }
+.admin-user { display: flex; align-items: center; gap: 16px; }
+.admin-user-meta { text-align: right; line-height: 1.3; }
+.admin-user-meta strong { display: block; font-size: 13px; }
+.admin-user-meta span { font-size: 11px; color: rgba(255,255,255,.62); }
+.admin-signout { border-color: rgba(255,255,255,.3); color: #fff; }
+.admin-signout:hover { background: rgba(255,255,255,.1); }
+.admin-main { width: min(100%, 1080px); margin: 0 auto; padding: 34px 30px 60px; }
+.admin-stats { margin-bottom: 26px; border: 1px solid var(--line-strong); border-radius: 9px; overflow: hidden; }
+.admin-empty { padding: 40px 26px; text-align: center; }
+.admin-empty p { margin: 0 0 6px; font-weight: 700; font-size: 15px; }
+
+.submission { padding: 20px 22px; margin-bottom: 16px; }
+.submission-head { display: flex; align-items: flex-start; justify-content: space-between; gap: 14px; flex-wrap: wrap; }
+.submission-head h2 { margin: 0 0 3px; font-size: 17px; }
+.submission-head p { margin: 0; font-size: 12px; }
+.submission-meta { display: flex; flex-wrap: wrap; gap: 8px; margin: 14px 0; }
+.submission-meta span { padding: 5px 10px; border: 1px solid var(--line); border-radius: 999px; background: var(--stripe); color: #5d585e; font-size: 11px; font-weight: 700; }
+.submission-courses { margin: 6px 0 14px; }
+.submission-courses summary { cursor: pointer; font-size: 12px; font-weight: 700; color: var(--maroon); }
+.submission-courses table { margin-top: 10px; max-width: 340px; }
+.submission-actions { display: flex; flex-wrap: wrap; gap: 10px; }
+.submission-note { margin: 12px 0 0; padding: 10px 12px; border-left: 3px solid #c0392b; background: #fdeeec; border-radius: 6px; font-size: 12px; color: #7c3a30; }
+
+.status-pill { display: inline-flex; align-items: center; gap: 6px; padding: 5px 11px; border-radius: 999px; font-size: 11px; font-weight: 750; white-space: nowrap; }
+.status-pill::before { content: ""; width: 6px; height: 6px; border-radius: 50%; background: currentColor; }
+.sp-pending { color: #9a6a00; background: #fdf3e0; border: 1px solid #f2d9a8; }
+.sp-approved { color: var(--green); background: var(--green-bg); border: 1px solid #c8e6d4; }
+.sp-rejected { color: #c0392b; background: #fdeeec; border: 1px solid #f2c4bd; }
+
+/* ===== Student validation status ===== */
+.validation-status { margin-bottom: 22px; padding: 15px 17px; border-radius: 9px; border: 1px solid var(--line); border-left: 4px solid var(--muted); background: #fff; }
+.validation-status p { margin: 6px 0 0; font-size: 13px; color: #5d585e; }
+.vs-badge { display: inline-flex; align-items: center; gap: 6px; font-size: 12px; font-weight: 800; text-transform: uppercase; letter-spacing: .03em; }
+.vs-pending { border-left-color: #d99a17; background: #fdf8ee; }
+.vs-pending .vs-badge { color: #9a6a00; }
+.vs-approved { border-left-color: var(--green); background: #f0f8f3; }
+.vs-approved .vs-badge { color: var(--green); }
+.vs-rejected { border-left-color: #c0392b; background: #fdf1ef; }
+.vs-rejected .vs-badge { color: #c0392b; }
+
+/* modal textarea */
+.modal-input { width: 100%; margin: 4px 0 20px; padding: 10px 12px; resize: vertical; text-align: left; }
+
+@media (max-width: 560px) {
+  .admin-topbar { padding: 12px 16px; }
+  .admin-brand-sub { display: none; }
+  .admin-main { padding: 26px 16px 50px; }
+  .admin-user-meta { display: none; }
+}
+
+/* ===== Printable course form ===== */
+.print-header, .print-meta, .print-signatures { display: none; }
+
 @media print {
-  .sidebar, .mobile-header, .toolbar, .registration-tray, .toast-wrap { display: none !important; }
-  .portal-shell { padding: 0 !important; }
-  .main { padding: 0 !important; }
+  @page { margin: 14mm; }
+  .sidebar, .mobile-header, .toolbar, .registration-tray, .toast-wrap, .menu-backdrop, .page-head, .section-head .count-badge { display: none !important; }
+  .portal-shell { padding: 0 !important; min-height: 0 !important; }
+  .main { padding: 0 !important; width: 100% !important; max-width: none !important; }
+  body { background: #fff !important; color: #000; }
+  .card, .table-card { border-color: #999 !important; box-shadow: none !important; }
+
+  .print-header { display: flex; align-items: center; gap: 14px; padding-bottom: 12px; margin-bottom: 14px; border-bottom: 2px solid var(--maroon); }
+  .print-crest img { width: 56px; height: 56px; object-fit: contain; }
+  .print-title h2 { margin: 0; font-size: 20px; color: var(--maroon); }
+  .print-title p { margin: 3px 0 0; font-size: 12px; color: #333; }
+
+  .print-meta { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 8px 24px; margin-bottom: 20px; }
+  .print-meta div { display: flex; flex-direction: column; }
+  .print-meta span { font-size: 9px; text-transform: uppercase; letter-spacing: .05em; color: #666; font-weight: 700; }
+  .print-meta strong { font-size: 13px; color: #000; }
+
+  .course-section { margin-bottom: 16px; break-inside: avoid; }
+  .section-title { font-size: 14px; color: var(--maroon); margin-bottom: 8px; }
+  table { font-size: 11px; }
+  th { background: #eee !important; color: #000 !important; -webkit-print-color-adjust: exact; print-color-adjust: exact; border-right: 1px solid #ccc; }
+  td { border-right: 1px solid #ddd; }
+  .table-footer { color: #000; }
+
+  .print-signatures { display: flex; justify-content: space-between; gap: 30px; margin-top: 40px; break-inside: avoid; }
+  .print-signatures div { flex: 1; text-align: center; }
+  .sig-line { display: block; height: 34px; border-bottom: 1px solid #000; margin-bottom: 6px; }
+  .print-signatures p { margin: 0; font-size: 10px; color: #333; }
 }
